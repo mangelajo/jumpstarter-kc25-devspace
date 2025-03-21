@@ -1,0 +1,42 @@
+schemaVersion: 2.3.0
+metadata:
+  name: jumpstarter-devspace
+  icon: https://jumpstarter.dev/jumpstarter.svg
+  tags:
+    - Python
+    - Jumpstarter
+  language: Python
+projects:
+  - name: jumpstarter
+    git:
+      remotes:
+        origin: https://github.com/jumpstarter-dev/jumpstarter-devspace.git
+components:
+   - name: runtime
+     container:
+       image: quay.io/jumpstarter-dev/jumpstarter-devspace:latest
+       mountSources: true
+       env: # use insecure TLS connection for now, you can remove this if your jumpstarter deployment has trusted TLS certs
+        - name: JUMPSTARTER_GRPC_INSECURE
+          value: "1"
+
+commands:
+  - id: pytest
+    exec:
+      component: runtime
+      commandLine: pytest
+
+  - id: client-list
+    exec:
+      component: runtime
+      commandLine: jmp list
+
+  - id: list-my-leases
+    exec:
+      component: runtime
+      commandLine: jmp lease list default
+
+  - id: release-my-leases
+    exec:
+      component: runtime
+      commandLine: jmp lease release default --all
