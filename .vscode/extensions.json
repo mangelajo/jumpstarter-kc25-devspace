@@ -15,7 +15,7 @@
         "usernamehw.errorlens",
         "ms-vscode.makefile-tools",
         "cnshenj.vscode-task-manager",
-        "eamodio.gitlens"
+        "rust-lang.rust"
     ],
     "unwantedRecommendations": [
         "ms-python.autopep8"
