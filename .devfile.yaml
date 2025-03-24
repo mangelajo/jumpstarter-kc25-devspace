@@ -12,13 +12,19 @@ projects:
       remotes:
         origin: https://github.com/mangelajo/jumpstarter-kc25-devspace.git
 components:
-   - name: runtime
-     container:
-       image: quay.io/mangelajo/kubecon-jumpstarter-devspace:latest
-       mountSources: true
-       env: # use insecure TLS connection for now, you can remove this if your jumpstarter deployment has trusted TLS certs
+  - name: runtime
+    container:
+      image: quay.io/mangelajo/kubecon-jumpstarter-devspace:latest
+      mountSources: true
+      env: # use insecure TLS connection for now, you can remove this if your jumpstarter deployment has trusted TLS certs
         - name: JUMPSTARTER_GRPC_INSECURE
           value: "1"
+        - name: CARGO_HOME
+          value: $(PROJECTS_ROOT)/cargo
+      memoryLimit: 4Gi
+      memoryRequest: 1Gi
+      cpuRequest: 100m
+      cpuLimit: 4
 
 commands:
   - id: pytest
@@ -29,14 +35,19 @@ commands:
   - id: client-list
     exec:
       component: runtime
-      commandLine: jmp list
+      commandLine: jmp config client list
 
   - id: list-my-leases
     exec:
       component: runtime
-      commandLine: jmp lease list default
+      commandLine: jmp get leases
 
   - id: release-my-leases
     exec:
       component: runtime
-      commandLine: jmp lease release default --all
+      commandLine: jmp delete leases --all
+
+  - id: list-exporters
+    exec:
+      component: runtime
+      commandLine: jmp get exporters

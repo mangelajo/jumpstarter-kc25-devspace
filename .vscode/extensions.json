@@ -15,7 +15,7 @@
         "usernamehw.errorlens",
         "ms-vscode.makefile-tools",
         "cnshenj.vscode-task-manager",
-        "rust-lang.rust"
+        "rust-lang.rust-analyzer"
     ],
     "unwantedRecommendations": [
         "ms-python.autopep8"
